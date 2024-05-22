@@ -1,0 +1,79 @@
+
+{{!-- booking.hbs  --}}
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>iFly - Booking</title>
+  <style>
+    .flight-summary {
+      border: 1px solid #ccc;
+      padding: 15px;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Booking Summary</h1>
+
+    {{#if flights.length}}
+      <div id="bookingSummary" class="flight-summary">
+        <h2>Selected Flights:</h2>
+        <ul>
+          {{#each flights}}
+            <li>
+              {{this.airline}} - {{this.arrival}} to {{this.destination}} on {{this.date}} ({{this.price}}€)
+            </li>
+          {{/each}}
+        </ul>
+        <p><strong>Total Price:</strong> <span id="totalPrice">{{total_price}}</span>€</p> 
+      </div>
+
+      <button id="completeBooking">Complete Booking</button>
+    {{else}}
+      <p>No flights selected for booking.</p>
+    {{/if}}
+  </div>
+
+<script>
+  const completeBookingButton = document.getElementById('completeBooking');
+  const totalPriceElement = document.getElementById('totalPrice');
+
+    // Calculate total price on page load
+    const flights = JSON.parse(sessionStorage.getItem('selectedFlights'));
+    let totalPrice = 0;
+    if (flights) {
+      Object.values(flights).forEach(flight => {
+        totalPrice += parseFloat(flight.price);
+      });
+      totalPriceElement.textContent = totalPrice.toFixed(2); 
+    }
+
+      if (completeBookingButton) { 
+    completeBookingButton.addEventListener('click', () => {
+      const userId = '{{user}}'; 
+      const flightIds = {{#each flights}}{{this.flightID}},{{/each}}; 
+
+      fetch('/booking/completeBooking', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ userId, flightIds })
+      })
+      .then(response => {
+        if (response.ok) {
+          alert('Booking completed successfully!');
+          window.location.href = '/index'; 
+        } else {
+          alert('An error occurred during booking.');
+        }
+      });
+    });
+  }
+</script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>

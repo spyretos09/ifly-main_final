@@ -1,0 +1,28 @@
+<head>
+    <title>Οι Πτήσεις Μου</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="/css/myflights.css">
+</head>
+<body>
+    <h1>Οι Πτήσεις Μου</h1>
+
+    {{#if flights}}
+        <div class="row"> 
+        {{#each flights}}
+            <div class="col-md-4 mb-4"> <div class="flight-card p-3">
+                    <img src="/img/{{this.airline}}.png" alt="{{this.airline}}.png" class="airline-logo"> <p class="card-text"> 
+                    <p><strong>Αεροπορική:</strong> {{airline}}</p>
+                    <p><strong>Άφιξη:</strong> {{arrival}}</p>
+                    <p><strong>Προορισμός:</strong> {{destination}}</p>
+                    <p><strong>Ημερομηνία:</strong> {{date}}</p>
+                    <p><strong>Τιμή:</strong> {{price}}</p>
+
+                </div>
+            </div>
+        {{/each}}
+        </div>
+    {{else}}
+        <p>Δεν έχετε κάνει κρατήσεις πτήσεων.</p>
+    {{/if}}
+</body>

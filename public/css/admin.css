@@ -1,0 +1,71 @@
+body {
+    font-family: sans-serif;
+}
+
+.container {
+    max-width: 960px;
+    margin: auto;
+    padding-top: 20px;
+}
+
+.table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+}
+
+th, td {
+    border-bottom: 1px solid #e0e8f0;
+    padding: 10px;
+    text-align: center;
+    border: none;
+}
+
+.add-flight-btn {
+    border-radius: 30px;
+    display: inline-block;
+    white-space: nowrap;
+    padding: 10px 20px;
+    font-size: 16px;
+}
+
+.flight-btn {
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    padding: 10px 20px;
+    width: 90%;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    text-decoration: none;
+    color: black;
+}
+
+.delete-btn {
+    color: white;
+    background-color: #dc3545;
+    border: none;
+    cursor: pointer;
+    padding: 5px 8px;
+    border-radius: 50%;
+}
+
+@media (max-width: 768px) {
+    .flight-btn {
+        flex-direction: column;
+        padding: 15px;
+    }
+
+    .add-flight-btn, .delete-btn {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 576px) {
+    .flight-btn {
+        width: 100%;
+        padding: 10px;
+    }
+}

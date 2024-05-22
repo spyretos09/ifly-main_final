@@ -1,0 +1,49 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Admin Dashboard</h1>
+        <div class="text-center">
+            <a href="/newflight" class="btn btn-primary mb-3 add-flight-btn">Add Flight</a>
+        </div>
+        <div class="d-flex flex-wrap justify-content-center">
+            {{#each flights}}
+                <div class="btn flight-btn m-2">
+                    {{this.airline}} - {{this.arrival}} to {{this.destination}} - {{this.date}} - ${{this.price}} - Seats: {{this.AvSeats}}
+                    <button class="btn btn-danger delete-btn" onclick="deleteFlight('{{this.flightID}}')">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                </div>
+            {{/each}}
+        </div>
+    </div>
+
+    <script>
+        function deleteFlight(flightID) {
+            if (confirm('Are you sure you want to delete this flight?')) {
+                fetch(`/admin/${flightID}`, {
+                    method: 'DELETE',
+                })
+                .then(response => {
+                    if (response.ok) {
+                        alert('Flight deleted successfully');
+                        window.location.reload();
+                    } else {
+                        alert('Failed to delete flight');
+                    }
+                })
+                .catch(error => alert('Error deleting flight: ' + error));
+            }
+        }
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
